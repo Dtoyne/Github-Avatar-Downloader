@@ -1,18 +1,38 @@
+// console.log('Welcome to the GitHub Avatar Downloader!');
+
 var request = require('request');
+var fs = require('fs');
 var GITHUB_USER = "Dtoyne";
 var GITHUB_TOKEN = "4e8b9e4d4dc8bb62ddce6b9d27e6c10d2c9c12fa";
 
+
 function getRepoContributors(repoOwner, repoName, cb) {
-  var requestURL = 'https://'+ GITHUB_USER + ':' + GITHUB_TOKEN + '@api.github.com/repos/' + GITHUB_USER + '/' + "github-avatar-downloader" + '/contributors';
-  console.log(requestURL);
-}
+  var requestURL = ('https://'+ GITHUB_USER + ':' + GITHUB_TOKEN + '@api.github.com/repos/' + repoOwner + '/' + repoName + '/contributors')
+  var options = {
+    url: requestURL,
+    headers: {
+    'User-Agent': 'request'
+  }
+};
 
-console.log('Welcome to the GitHub Avatar Downloader!');
+  request.get(options, function(error, response, body) {
+    if (error) {
+      return error;
+    }
+    if (response.statusCode === 200) {
+      var data = JSON.parse(body);
+      cb(null, data);
+    }
+  });
+};
 
-getRepoContributors();
+getRepoContributors("jquery", "jquery", function(err, result) {
+  if (err) {
+    console.log("Errors:", err);
+    return err;
+  }
 
-
-// getRepoContributors("jquery", "jquery", function(err, result) {
-//   console.log("Errors:", err);
-//   console.log("Result:", result);
-// });
+  for (var i = 0; i < result.length; i++) {
+    console.log(result[i].avatar_url);
+  }
+});
