@@ -4,7 +4,8 @@
   "description": "Dylan Toyne",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint download_avatars.js"
   },
   "repository": {
     "type": "git",
@@ -19,5 +20,8 @@
   "homepage": "https://github.com/Dtoyne/github-avatar-downloader#readme",
   "dependencies": {
     "request": "^2.79.0"
+  },
+  "devDependencies": {
+    "eslint": "^3.13.1"
   }
 }
