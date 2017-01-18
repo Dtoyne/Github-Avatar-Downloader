@@ -1,15 +1,15 @@
 console.log('Welcome to the GitHub Avatar Downloader!');
-
+require("dotenv").config();
 const request = require("request");
 const fs = require("fs");
 const https = require("https");
-const GITHUB_USER = "Dtoyne";
-const GITHUB_TOKEN = "4e8b9e4d4dc8bb62ddce6b9d27e6c10d2c9c12fa";
+const GITHUB_USER = process.env.GITHUB_USER;
+const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 const owner = process.argv[2];
 const repo = process.argv[3];
 const folder = './avatars/';
 
-// Based on the command-line input, get the list of contributors from the GitHub API:
+// Based on the command-line input(owner, repo), get the list of contributors from the GitHub API:
 
 function getRepoContributors (repoOwner, repoName, cb) {
   let requestURL = 'https://'+ GITHUB_USER + ':' + GITHUB_TOKEN + '@api.github.com/repos/' + repoOwner + '/' + repoName + '/contributors';
