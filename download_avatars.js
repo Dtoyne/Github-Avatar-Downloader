@@ -29,22 +29,18 @@ function getRepoContributors (repoOwner, repoName, cb) {
 
     request.get(options, (error, response, body) => {
       if (error) {
-        return error;
+        throw error;
       }
       if (response.statusCode === 200) {
         let data = JSON.parse(body);
-        cb(null, data);
+        cb(data);
       }
     });
   }
 
   // Loop through the contributors and download their respective avatars:
 
-  getRepoContributors(owner, repo, (err, result) => {
-    if (err) {
-      console.log("Errors:", err);
-      return err;
-    }
+  getRepoContributors(owner, repo, (result) => {
     for (let i = 0; i < result.length; i++) {
       downloadImageByURL(result[i].avatar_url, `./avatars/${result[i].login}.jpg`);
     }
